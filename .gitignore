@@ -1,0 +1,6 @@
+log
+log/*
+.log/*
+*.log
+log/error.log
+log/access.log
