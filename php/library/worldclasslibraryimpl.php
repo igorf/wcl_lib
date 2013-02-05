@@ -8,19 +8,26 @@
  */
 
 require_once __DIR__ . DIRECTORY_SEPARATOR . "worldclasslibraryinterface.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "wcworld.php";
 
 class WorldClassLibraryImpl implements WorldClassLibraryInterface {
 
+    private $world = null;
+
+    public function __construct() {
+        $this->world = WCWorld::createInstance();
+    }
+
     public function addCity(WCCity $city) {
-        // TODO: Implement addCity() method.
+        $this->world->addCity($city);
     }
 
     public function addClub(WCClub $club) {
-        // TODO: Implement addClub() method.
+        $this->world->addClub($club);
     }
 
     public function addSubway(WCSubway $subway) {
-        // TODO: Implement addSubway() method.
+        $this->world->addSubway($subway);
     }
 
     public function getUser() {
@@ -28,6 +35,6 @@ class WorldClassLibraryImpl implements WorldClassLibraryInterface {
     }
 
     public function getWorldJSON() {
-        // TODO: Implement getWorldJSON() method.
+        return json_encode($this->world->getSerializableObject());
     }
 }

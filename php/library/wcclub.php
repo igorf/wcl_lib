@@ -6,12 +6,18 @@
  * Time: 11:23
  * To change this template use File | Settings | File Templates.
  */
-class WCClub implements WCSerializable {
+require_once __DIR__ . DIRECTORY_SEPARATOR . "base" . DIRECTORY_SEPARATOR . "wcserializable.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "base" . DIRECTORY_SEPARATOR . "wcobject.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "exception" . DIRECTORY_SEPARATOR . "wcidexception.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "wcworld.php";
 
+class WCClub extends WCObject implements WCSerializable {
+    protected $fields = array("id", "name", "address", "cityId", "subwayId");
     private $id;
     private $name;
     private $address;
     private $cityId;
+    private $subwayId;
     private $wcWorld;
 
     public function getSerializableObject() {
@@ -45,7 +51,7 @@ class WCClub implements WCSerializable {
     }
 
     public function getId() {
-        if (!intval($this->id) >= 0) {
+        if (intval($this->id) <= 0) {
             throw new WcIdException();
         }
         return intval($this->id);
@@ -65,5 +71,13 @@ class WCClub implements WCSerializable {
 
     public function getWorld() {
         return $this->wcWorld;
+    }
+
+    public function setSubwayId($subwayId) {
+        $this->subwayId = $subwayId;
+    }
+
+    public function getSubwayId() {
+        return $this->subwayId;
     }
 }
