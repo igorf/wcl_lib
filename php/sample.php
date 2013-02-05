@@ -7,13 +7,13 @@ $wcl = WorldClassLibrary::createInstance();
 
 // Заполнить города
 $wcl->addCity(new WCCity(array(
-    "id" => 123, "name" =>  "Москва", "geoIpId" => "MV"
+    "id" => 123, "name" =>  "Москва", "geoIpId" => "RU_Moscow"
 )));
 $wcl->addCity(new WCCity(array(
-    "id" => 345, "name" =>  "Казань", "geoIpId" => "KZ"
+    "id" => 345, "name" =>  "Казань", "geoIpId" => "50349"
 )));
 $wcl->addCity(new WCCity(array(
-    "id" => 678, "name" =>  "Самара", "geoIpId" => "SM"
+    "id" => 678, "name" =>  "Ульяновск", "geoIpId" => "RU_Ulyanovsk"
 )));
 
 // Заполнить станции метро
