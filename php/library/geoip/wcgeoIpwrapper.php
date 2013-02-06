@@ -32,7 +32,7 @@ class WCGeoIpWrapper {
     public function getCityId() {
         $record = geoip_record_by_addr($this->gi, $this->getUserIP());
         try {
-            return $record->country_code . "_" . $record->city;
+            return is_null($record) ? null : ($record->country_code . "_" . $record->city);
         } catch (Exception $ex) {
             return null;
         }
