@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="library/wcmap.js"></script>
+    <script>
+        $(function () {
+            wcMapLib = new WCMapLib({
+                worldURL: "http://wcl.local/php/sample.php",
+                onReadFinish: function(world) {
+                    var isCityFound = world.cityFound();
+                    var cityFindResult = world.findCityByName('Москва');
+                    for (var cID in world.cityList) {
+                        var city = world.getCityByID(cID);
+                        var found = city.findClubs("ома");
+
+                        console.log(city.name);
+
+                        var cl = city.getClubList();
+                        for (var i = 0; i < cl.length; i++) {
+                            var club = cl[i];
+                            console.log("> " + club.name);
+                        }
+
+                        var sl = city.getSubwayList();
+                        for (var i = 0; i < sl.length; i++) {
+                            var subway = sl[i];
+                            console.log(">> " + subway.name);
+
+                            var scl = subway.getClubList();
+                            for (var i = 0; i < scl.length; i++) {
+                                var club = scl[i];
+                                console.log(">>> " + club.name);
+                            }
+                        }
+                    }
+                },
+                onReadError: function() {
+                    alert("Read error");
+                }
+            });
+            wcMapLib.readRemoteData();
+        });
+    </script>
+</head>
+</html>

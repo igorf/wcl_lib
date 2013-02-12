@@ -7,11 +7,15 @@
  * To change this template use File | Settings | File Templates.
  */
 require_once __DIR__ . DIRECTORY_SEPARATOR . "base" . DIRECTORY_SEPARATOR . "wcserializable.php";
+require_once __DIR__ . DIRECTORY_SEPARATOR . "geoip" . DIRECTORY_SEPARATOR . "wcgeoipwrapper.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR . "wcclub.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR . "wcsubway.php";
 require_once __DIR__ . DIRECTORY_SEPARATOR . "wccity.php";
 
 class WCWorld implements WCSerializable {
+
+    const CITY_NOT_FOUND_ID = -1;
+
     private $cityList = array();
     private $subwayList = array();
     private $clubList = array();
@@ -21,8 +25,21 @@ class WCWorld implements WCSerializable {
     }
 
     private function getCurrentCityId() {
-        //TODO: исправить!
-        return -1;
+        try {
+            $wgi = WCGeoIpWrapper::getInstance();
+            $cityId = $wgi->getCityId();
+            if (is_null($cityId)) {
+                return self::CITY_NOT_FOUND_ID;
+            }
+            foreach ($this->cityList as $city) {
+                if ($city->getGeoIpId() == $cityId) {
+                    return $city->getId();
+                }
+            }
+        } catch (Exception $ex) {
+            // Nothing to do
+        }
+        return self::CITY_NOT_FOUND_ID;
     }
 
     protected function __construct() {}
